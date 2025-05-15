@@ -25,5 +25,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Validate Release Files
-        run: ls -al .
+      - name: Read Maven Artifact ID
+        id: get_run_id
+        run: |
+          echo "runId=$(cat release_id.txt)" >> $GITHUB_OUTPUT
+
+      - name: Download Maven Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release_files
+          run-id: ${{ steps.get_run_id.outputs.runId }}
+          path: release_files
+
+      - name: List Release Files
+        run: |
+          ls -al release_files/**
