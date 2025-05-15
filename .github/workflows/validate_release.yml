@@ -1,0 +1,23 @@
+name: Validate Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release version'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  create:
+    name: Validate Release Items
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Release Info
+        run: gh release donwload "${{ inputs.releaseVersion }}" --clobber --pattern "**/release_id.txt"
+
+      - name: Validate Release Files
+        run: ls -al .

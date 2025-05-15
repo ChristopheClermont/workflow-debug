@@ -1,0 +1,53 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release version'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  create:
+    name: Create Release Items
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create release files
+        shell: bash
+        run: |
+          echo "Creating release files..."
+          mkdir -p release_files
+          mkdir -p release_files/other_files
+          echo "${GITHUB_RUN_ID}" > release_files/release_id.txt
+          echo "Release file content" > release_files/release.txt
+          echo "Other file content" > release_files/other_files/other.txt
+          echo "Release files created."
+
+      - name: Upload release files
+        uses: actions/upload-artifact@v3
+        with:
+          name: release_files
+          path: release_files/*
+
+      - name: Create a GitHub Prerelease
+        run: |
+          gh release create "${{ inputs.releaseVersion }}" \
+            --title "Release v${{ inputs.releaseVersion }}" \
+            --prerelease \
+            --notes-from-tag \
+            --target "${{ env.branchName }}" \
+            --title "Release v${{ inputs.releaseVersion }}" \
+            --verify-tag
+
+      - name: Add Files to Release
+        run: |
+          echo "Adding files to release..."
+          find release_files/ -type f | while read file; do
+            echo "Adding $file to release..."
+            gh release upload ${{ inputs.releaseVersion }} "$file" --clobber
+          done
+          echo "Release files added."
