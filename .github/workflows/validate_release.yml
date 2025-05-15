@@ -28,6 +28,7 @@ jobs:
       - name: Read Maven Artifact ID
         id: get_run_id
         run: |
+          echo "Release ID: $(cat release_id.txt)"
           echo "runId=$(cat release_id.txt)" >> $GITHUB_OUTPUT
 
       - name: Download Maven Artifacts
