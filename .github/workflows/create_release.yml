@@ -42,7 +42,6 @@ jobs:
           gh release create "${{ inputs.releaseVersion }}" \
             --title "Release v${{ inputs.releaseVersion }}" \
             --prerelease \
-            --notes-from-tag \
             --title "Release v${{ inputs.releaseVersion }}"
         env:
           GH_TOKEN: ${{ github.token }}
