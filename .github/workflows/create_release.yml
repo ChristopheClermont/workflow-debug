@@ -32,7 +32,7 @@ jobs:
           echo "Release files created."
 
       - name: Upload release files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: release_files
           path: release_files/*
