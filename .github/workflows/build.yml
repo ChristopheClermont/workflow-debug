@@ -16,6 +16,12 @@ jobs:
         shell: bash
         run: env | sort
 
+      - name: Execute on Debug
+        shell: bash
+        run: |
+          echo "This is a debug step"
+        if: ${{ env.RUNNER_DEBUG == '1' }}
+
       - name: Step that fails
         shell: bash
         run: |
