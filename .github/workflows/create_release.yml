@@ -46,6 +46,8 @@ jobs:
             --target "${{ env.branchName }}" \
             --title "Release v${{ inputs.releaseVersion }}" \
             --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Add Files to Release
         run: |
@@ -55,3 +57,5 @@ jobs:
             gh release upload ${{ inputs.releaseVersion }} "$file" --clobber
           done
           echo "Release files added."
+        env:
+          GH_TOKEN: ${{ github.token }}
