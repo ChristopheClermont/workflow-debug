@@ -43,9 +43,7 @@ jobs:
             --title "Release v${{ inputs.releaseVersion }}" \
             --prerelease \
             --notes-from-tag \
-            --target "${{ env.branchName }}" \
-            --title "Release v${{ inputs.releaseVersion }}" \
-            --verify-tag
+            --title "Release v${{ inputs.releaseVersion }}"
         env:
           GH_TOKEN: ${{ github.token }}
 
