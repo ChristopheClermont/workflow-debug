@@ -37,6 +37,7 @@ jobs:
           name: release_files
           run-id: ${{ steps.get_run_id.outputs.runId }}
           path: release_files
+          github-token: ${{ github.token }}
 
       - name: List Release Files
         run: |
