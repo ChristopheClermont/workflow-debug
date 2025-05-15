@@ -16,11 +16,20 @@ jobs:
         shell: bash
         run: env | sort
 
-      - name: Execute on Debug
+      - name: Set Debug Flag
+        id: debug_flag
         shell: bash
-        run: |
-          echo "This is a debug step"
+        run: echo "flag=${RUNNER_DEBUG:-0}" >> $GITHUB_OUTPUT
+
+      - name: Execute on Debug Environment
+        shell: bash
+        run: echo "This is a debug step"
         if: ${{ env.RUNNER_DEBUG == '1' }}
+
+      - name: Execute on Debug Flag Configured
+        shell: bash
+        run: echo "This is a debug step"
+        if: ${{ steps.debug_flag.outputs.flag == '1' }}
 
       - name: Step that fails
         shell: bash
