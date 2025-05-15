@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get Release Info
-        run: gh release donwload "${{ inputs.releaseVersion }}" --pattern "**/release_id.txt"
+        run: gh release download "${{ inputs.releaseVersion }}" --pattern "release_id.txt"
         env:
           GH_TOKEN: ${{ github.token }}
 
