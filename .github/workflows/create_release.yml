@@ -8,6 +8,10 @@ on:
         required: true
         default: '1.0.0'
 
+permissions:
+  # This is required for report upload
+  contents: write
+
 jobs:
   create:
     name: Create Release Items
